@@ -72,10 +72,11 @@ module AspNet5Buildpack
       copier.cp(File.join(cache_dir, '.dnx'), build_dir, out) if File.exist? File.join(cache_dir, '.dnx')
       copier.cp(File.join(cache_dir, 'libuv'), build_dir, out) if File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(cache_dir, 'libunwind'), build_dir, out) if File.exist? File.join(cache_dir, 'libunwind')
+      copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
     end
 
     def install_clidriver(out)
-      dnvm_installer.install(build_dir, out)
+      clidriver_installer.install(build_dir, out)
     end
     
     def install_dnvm(out)
@@ -94,6 +95,7 @@ module AspNet5Buildpack
       copier.cp(File.join(build_dir, '.dnx'), cache_dir, out) if File.exist? File.join(build_dir, '.dnx')
       copier.cp(File.join(build_dir, 'libuv'), cache_dir, out) unless File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(build_dir, 'libunwind'), cache_dir, out) unless File.exist? File.join(cache_dir, 'libunwind')
+      copier.cp(File.join(build_dir, 'odbc_cli'), cache_dir, out) unless File.exist? File.join(cache_dir, 'odbc_cli')
     end
 
     def step(description, method)
@@ -112,6 +114,7 @@ module AspNet5Buildpack
     attr_reader :cache_dir
     attr_reader :libuv_binary
     attr_reader :libunwind_binary
+    attr_reader :clidriver_installer
     attr_reader :dnvm_installer
     attr_reader :dnx_installer
     attr_reader :mozroots
