@@ -24,7 +24,7 @@ module AspNet5Buildpack
     def install(app_dir, out)
       @shell.env['HOME'] = app_dir
 	  
-      cmd = 'touch ~/.bashrc; curl -LO ftp://db2ftp.torolab.ibm.com/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
+      cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
       @shell.exec(cmd, out)
 	  
       cmd = 'tar -xvzf v10.5fp6_linuxx64_odbc_cli.tar.gz -C #{app_dir} &> /dev/null'
