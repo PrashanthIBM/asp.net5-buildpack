@@ -28,7 +28,7 @@ module AspNet5Buildpack
      cmd = 'echo $HOME; touch ~/.bashrc; rm -rf  #{app_dir}/odbc_cli; '
       @shell.exec(cmd, out)
 	  
-      cmd = 'echo $HOME; tar zxv #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz '
+      cmd = 'ls -lrt $HOME; tar zxv #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
 	  
       #cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
