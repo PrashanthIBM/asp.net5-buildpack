@@ -21,7 +21,7 @@ require_relative '../../../lib/buildpack.rb'
 
 describe AspNet5Buildpack::Compiler do
   subject(:compiler) do
-    AspNet5Buildpack::Compiler.new(build_dir, cache_dir, libuv_binary, libunwind_binary, dnvm_installer, dnx_installer, dnu, copier, out)
+    AspNet5Buildpack::Compiler.new(build_dir, cache_dir, libuv_binary, libunwind_binary, clidriver_installer, dnvm_installer, dnx_installer, dnu, copier, out)
   end
 
   before do
@@ -30,6 +30,7 @@ describe AspNet5Buildpack::Compiler do
 
   let(:libuv_binary) { double(:libuv_binary, extract: nil) }
   let(:libunwind_binary) { double(:libunwind_binary, extract: nil) }
+  let(:clidriver_installer) { double(:clidriver_installer, install: nil) }
   let(:copier) { double(:copier, cp: nil) }
   let(:dnvm_installer) { double(:dnvm_installer, install: nil) }
   let(:dnx_installer) { double(:dnx_installer, install: nil) }
@@ -111,6 +112,15 @@ describe AspNet5Buildpack::Compiler do
           expect(libunwind_binary).not_to receive(:extract)
           compiler.compile
         end
+      end
+    end
+    
+    describe 'Installing clidriver' do
+      it_behaves_like 'step', 'Installing clidriver', :install_clidriver
+
+      it 'installs clidriver' do
+        expect(clidriver_install).to receive(:install).with(build_dir, anything)
+        compiler.compile
       end
     end
 
