@@ -28,6 +28,10 @@ module AspNet5Buildpack
       @shell.exec(cmd, out)
 	  
 	  cmd = 'tar -xvzf v10.5fp6_linuxx64_odbc_cli.tar.gz -C #{app_dir} &> /dev/null'
+	  @shell.exec(cmd, out)
+	  
+	  cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
+	  @shell.exec(cmd, out)
 	  
 	  @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
 	  @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
