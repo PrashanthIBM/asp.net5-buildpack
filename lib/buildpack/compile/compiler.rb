@@ -16,6 +16,7 @@
 
 require_relative 'libuv_installer.rb'
 require_relative 'libunwind_installer.rb'
+require_relative 'clidriver_installer.rb'
 require_relative 'dnvm_installer.rb'
 require_relative 'dnx_installer.rb'
 require_relative 'dnu.rb'
@@ -26,11 +27,12 @@ require 'pathname'
 
 module AspNet5Buildpack
   class Compiler
-    def initialize(build_dir, cache_dir, libuv_binary, libunwind_binary, dnvm_installer, dnx_installer, dnu, copier, out)
+    def initialize(build_dir, cache_dir, libuv_binary, libunwind_binary, clidriver_installer, dnvm_installer, dnx_installer, dnu, copier, out)
       @build_dir = build_dir
       @cache_dir = cache_dir
       @libuv_binary = libuv_binary
       @libunwind_binary = libunwind_binary
+      @clidriver_installer = clidriver_installer
       @dnvm_installer = dnvm_installer
       @dnx_installer = dnx_installer
       @dnu = dnu
@@ -44,6 +46,7 @@ module AspNet5Buildpack
       step('Restoring files from buildpack cache', method(:restore_cache))
       step('Extracting libuv', method(:extract_libuv))
       step('Extracting libunwind', method(:extract_libunwind))
+      step('Installing clidriver', method(:install_clidriver))
       step('Installing DNVM', method(:install_dnvm))
       step('Installing DNX with DNVM', method(:install_dnx))
       step('Restoring dependencies with DNU', method(:restore_dependencies))
@@ -71,6 +74,10 @@ module AspNet5Buildpack
       copier.cp(File.join(cache_dir, 'libunwind'), build_dir, out) if File.exist? File.join(cache_dir, 'libunwind')
     end
 
+    def install_clidriver(out)
+      dnvm_installer.install(build_dir, out)
+    end
+    
     def install_dnvm(out)
       dnvm_installer.install(build_dir, out) unless File.exist? File.join(build_dir, 'approot', 'runtimes')
     end
