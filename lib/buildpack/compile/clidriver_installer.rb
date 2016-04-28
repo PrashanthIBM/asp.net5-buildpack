@@ -25,10 +25,10 @@ module AspNet5Buildpack
       @shell.env['HOME'] = app_dir
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
-     cmd = 'touch ~/.bashrc; rm -rf  #{app_dir}/odbc_cli; '
+     cmd = 'echo $HOME; touch ~/.bashrc; rm -rf  #{app_dir}/odbc_cli; '
       @shell.exec(cmd, out)
 	  
-      cmd = 'tar zxv #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz -C #{app_dir} '
+      cmd = 'echo $HOME;tar zxvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz -C #{app_dir} '
       @shell.exec(cmd, out)
 	  
       #cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
