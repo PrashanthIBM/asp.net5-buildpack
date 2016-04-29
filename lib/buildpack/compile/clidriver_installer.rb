@@ -43,7 +43,7 @@ module AspNet5Buildpack
       cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/clidriver/odbc_cli/clidriver/bin; '
       @shell.exec(cmd, out)
       
-      cmd = 'cp #{app_dir}/db2dsdriver.cfg #{dest_dir}/odbc_cli/clidriver/cfg/db2dsdriver.cfg ; db2cli validate'
+      cmd = '/bin/cp #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg/db2dsdriver.cfg ; db2cli validate'
       @shell.exec(cmd, out)      
     end	
   end
