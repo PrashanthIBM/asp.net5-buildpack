@@ -25,7 +25,7 @@ module AspNet5Buildpack
       @shell.env['HOME'] = app_dir
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
-     cmd = 'echo $HOME; touch ~/.bashrc; rm -rf v10.5fp6_linuxx64_odbc_cli.tar.gz '
+     cmd = 'echo $HOME; touch ~/.bashrc; rm -rf v10.5fp6_linuxx64_odbc_cli.tar.gz; ls -lrt $HOME '
       @shell.exec(cmd, out)
 	  
      # cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
@@ -37,7 +37,7 @@ module AspNet5Buildpack
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
 	  
-      cmd = 'db2cli validate'
+      cmd = 'echo LD_LIBRARY_PATH; echo $PATH; $which db2cli'
       @shell.exec(cmd, out)
       
     end	
