@@ -26,14 +26,14 @@ module AspNet5Buildpack
       #@dest_dir = app_dir/clidriver
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
-      cmd = 'echo $HOME; touch ~/.bashrc; ls -lrt #{app_dir}'
+      cmd = 'echo $HOME; touch ~/.bashrc; ls -lrt #{app_dir}/ '
       @shell.exec(cmd, out)
 	  
-     cmd = "rm -rf #{app_dir}/clidriver; rm -rf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz;"
+     #cmd = "rm -rf #{app_dir}/clidriver; rm -rf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz;"
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
       
-      cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar zxv #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar -C #{app_dir}/clidriver &> /dev/null "
+      cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar xvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar -C #{app_dir}/clidriver &> /dev/null "
 	  
       #cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
       # @shell.exec(cmd, out)
