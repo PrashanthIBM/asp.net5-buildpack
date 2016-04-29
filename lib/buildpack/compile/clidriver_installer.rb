@@ -29,7 +29,7 @@ module AspNet5Buildpack
       cmd = 'echo $HOME; touch ~/.bashrc; '
       @shell.exec(cmd, out)
 	  
-     cmd = "mkdir -p #{dest_dir}; echo "v10.5fp6_linuxx64_odbc_cli.tar.gz"  | tar zxv -C #{dest_dir} &> /dev/null; ls -lrt #{dest_dir} "
+     cmd = "mkdir -p #{dest_dir};  tar zxv -C #{dest_dir} &> /dev/null; ls -lrt #{dest_dir} "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
 	  
