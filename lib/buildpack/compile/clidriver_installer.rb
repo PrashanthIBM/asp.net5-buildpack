@@ -37,7 +37,7 @@ module AspNet5Buildpack
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
 	  
-      cmd = 'echo LD_LIBRARY_PATH; echo $PATH; $which db2cli'
+      cmd = 'echo LD_LIBRARY_PATH; echo $PATH; which db2cli'
       @shell.exec(cmd, out)
       
     end	
