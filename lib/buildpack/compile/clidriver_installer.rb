@@ -29,7 +29,7 @@ module AspNet5Buildpack
       cmd = 'echo $HOME; touch ~/.bashrc; '
       @shell.exec(cmd, out)
 	  
-     cmd = "mkdir -p clidriver;  tar zxv -C #{app_dir}/clidriver &> /dev/null; echo 'clidriver' ; ls -lrt #{app_dir}/clidriver "
+     cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar zxv -C #{app_dir}/clidriver &> /dev/null; ls -lrt #{app_dir}/clidriver "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
 	  
