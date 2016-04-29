@@ -23,13 +23,13 @@ module AspNet5Buildpack
 
     def install(app_dir, out)
       @shell.env['HOME'] = app_dir
-      @dest_dir = app_dir/clidriver
+      #@dest_dir = app_dir/clidriver
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
       cmd = 'echo $HOME; touch ~/.bashrc; '
       @shell.exec(cmd, out)
 	  
-     cmd = "mkdir -p #{dest_dir};  tar zxv -C #{dest_dir} &> /dev/null; ls -lrt #{dest_dir} "
+     cmd = "mkdir -p clidriver;  tar zxv -C clidriver &> /dev/null; ls -lrt clidriver "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
 	  
