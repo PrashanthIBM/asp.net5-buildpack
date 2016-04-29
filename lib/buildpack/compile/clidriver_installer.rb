@@ -26,7 +26,7 @@ module AspNet5Buildpack
       #@dest_dir = app_dir/clidriver
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
-      cmd = 'echo $HOME; touch ~/.bashrc; '
+      cmd = 'echo $HOME; touch ~/.bashrc; ls -lrt #{app_dir}'
       @shell.exec(cmd, out)
 	  
      cmd = "rm -rf #{app_dir}/clidriver; rm -rf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz;"
