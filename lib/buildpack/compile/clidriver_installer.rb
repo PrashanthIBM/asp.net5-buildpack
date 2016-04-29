@@ -23,25 +23,27 @@ module AspNet5Buildpack
 
     def install(app_dir, out)
       @shell.env['HOME'] = app_dir
+      @dest_dir = app_dir/clidriver
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
       cmd = 'echo $HOME; touch ~/.bashrc; '
       @shell.exec(cmd, out)
 	  
-     # cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
-     # @shell.exec(cmd, out)
+     cmd = "mkdir -p #{dest_dir}; echo "v10.5fp6_linuxx64_odbc_cli.tar.gz"  | tar zxv -C #{dest_dir} &> /dev/null; ls -lrt #{dest_dir} "
+     #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
+      @shell.exec(cmd, out)
 	  
       #cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
       # @shell.exec(cmd, out)
 	  
-      @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
-      @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
+      @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/clidriver/odbc_cli/clidriver/lib"
+      @shell.env['PATH'] = "$PATH:#{app_dir}/clidriver/odbc_cli/clidriver/bin"
 	  
       #cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; bash -c  db2cli validate -dsn alias1 -connect'
-      cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/odbc_cli/clidriver/bin; echo " ls clidriver path" ; ls -lrt $HOME/odbc_cli/ '
+      cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/clidriver/odbc_cli/clidriver/bin; '
       @shell.exec(cmd, out)
       
-      cmd = 'cat #{app_dir}/odbc_cli/clidriver/cfg/db2dsdriver.cfg; #{app_dir}/odbc_cli/clidriver/bin/db2cli validate'
+      cmd = 'cp #{app_dir}/db2dsdriver.cfg #{dest_dir}/odbc_cli/clidriver/cfg/db2dsdriver.cfg ; db2cli validate'
       @shell.exec(cmd, out)      
     end	
   end
