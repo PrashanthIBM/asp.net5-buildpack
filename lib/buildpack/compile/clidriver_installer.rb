@@ -29,7 +29,7 @@ module AspNet5Buildpack
       cmd = 'echo $HOME; touch ~/.bashrc; '
       @shell.exec(cmd, out)
 	  
-     cmd = "mkdir -p clidriver;  tar zxv -C clidriver &> /dev/null; ls -lrt clidriver "
+     cmd = "mkdir -p clidriver;  tar zxv -C #{app_dir}/clidriver &> /dev/null; echo "clidriver" ; ls -lrt #{app_dir}/clidriver "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
       @shell.exec(cmd, out)
 	  
@@ -43,7 +43,8 @@ module AspNet5Buildpack
       cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/clidriver/odbc_cli/clidriver/bin; '
       @shell.exec(cmd, out)
       
-      cmd = '/bin/cp #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg/db2dsdriver.cfg ; db2cli validate'
+      #cmd = 'cp #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg/db2dsdriver.cfg ; db2cli validate'
+      cmd = 'db2cli validate'
       @shell.exec(cmd, out)      
     end	
   end
