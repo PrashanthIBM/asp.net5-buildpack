@@ -38,7 +38,7 @@ module AspNet5Buildpack
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
 	  
       #cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; bash -c  db2cli validate -dsn alias1 -connect'
-      cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/odbc_cli/clidriver/bin; ls -lrt $HOME/odbc_cli/;'
+      cmd = 'echo $LD_LIBRARY_PATH; echo "PATH = " ; echo $PATH; ls -lRt #{app_dir}/odbc_cli/clidriver/bin; echo " ls clidriver path" ; ls -lrt $HOME/odbc_cli/ '
       @shell.exec(cmd, out)
       
       cmd = 'cat #{app_dir}/odbc_cli/clidriver/cfg/db2dsdriver.cfg; #{app_dir}/odbc_cli/clidriver/bin/db2cli validate'
