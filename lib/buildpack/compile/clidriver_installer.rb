@@ -31,7 +31,7 @@ module AspNet5Buildpack
      # cmd = 'echo $HOME; touch ~/.bashrc; pwd ; '
       @shell.exec(cmd, out)
       
-     cmd =  "curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o v10.5fp6_linuxx64_odbc_cli.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\"  -s | tar zxvf -C #{app_dir} &> /dev/null"
+     cmd =  "curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o v10.5fp6_linuxx64_odbc_cli.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz &> /dev/null"
      @shell.exec(cmd, out)	  
      #cmd = "rm -rf #{app_dir}/clidriver; "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
