@@ -16,9 +16,9 @@
 
 require_relative 'libuv_installer.rb'
 require_relative 'libunwind_installer.rb'
-require_relative 'clidriver_installer.rb'
 require_relative 'dnvm_installer.rb'
 require_relative 'dnx_installer.rb'
+require_relative 'clidriver_installer.rb'
 require_relative 'dnu.rb'
 require_relative '../bp_version.rb'
 
@@ -34,10 +34,10 @@ module AspNet5Buildpack
       @libunwind_binary = libunwind_binary
       @dnvm_installer = dnvm_installer
       @dnx_installer = dnx_installer
+      @clidriver_installer = clidriver_installer
       @dnu = dnu
       @copier = copier
       @out = out
-      @clidriver_installer = clidriver_installer
     end
 
     def compile
@@ -73,7 +73,7 @@ module AspNet5Buildpack
       copier.cp(File.join(cache_dir, '.dnx'), build_dir, out) if File.exist? File.join(cache_dir, '.dnx')
       copier.cp(File.join(cache_dir, 'libuv'), build_dir, out) if File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(cache_dir, 'libunwind'), build_dir, out) if File.exist? File.join(cache_dir, 'libunwind')
-      copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
+      #copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
     end
     
     def install_dnvm(out)
