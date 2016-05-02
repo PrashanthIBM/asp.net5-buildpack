@@ -27,17 +27,17 @@ require 'pathname'
 
 module AspNet5Buildpack
   class Compiler
-    def initialize(build_dir, cache_dir, libuv_binary, libunwind_binary, clidriver_installer, dnvm_installer, dnx_installer, dnu, copier, out)
+    def initialize(build_dir, cache_dir, libuv_binary, libunwind_binary, dnvm_installer, dnx_installer, clidriver_installer, dnu, copier, out)
       @build_dir = build_dir
       @cache_dir = cache_dir
       @libuv_binary = libuv_binary
       @libunwind_binary = libunwind_binary
-      @clidriver_installer = clidriver_installer
       @dnvm_installer = dnvm_installer
       @dnx_installer = dnx_installer
       @dnu = dnu
       @copier = copier
       @out = out
+      @clidriver_installer = clidriver_installer
     end
 
     def compile
@@ -46,9 +46,10 @@ module AspNet5Buildpack
       step('Restoring files from buildpack cache', method(:restore_cache))
       step('Extracting libuv', method(:extract_libuv))
       step('Extracting libunwind', method(:extract_libunwind))
-      step('Installing clidriver', method(:install_clidriver))
       step('Installing DNVM', method(:install_dnvm))
       step('Installing DNX with DNVM', method(:install_dnx))
+      step('Installing clidriver', method(:install_clidriver))
+      puts "CLIDRIVER installation is done and db2cli validate is working \n"
       step('Restoring dependencies with DNU', method(:restore_dependencies))
       step('Saving to buildpack cache', method(:save_cache))
       puts "ASP.NET 5 buildpack is done creating the droplet\n"
@@ -72,11 +73,7 @@ module AspNet5Buildpack
       copier.cp(File.join(cache_dir, '.dnx'), build_dir, out) if File.exist? File.join(cache_dir, '.dnx')
       copier.cp(File.join(cache_dir, 'libuv'), build_dir, out) if File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(cache_dir, 'libunwind'), build_dir, out) if File.exist? File.join(cache_dir, 'libunwind')
-      #copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
-    end
-
-    def install_clidriver(out)
-      clidriver_installer.install(build_dir, out)
+      copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
     end
     
     def install_dnvm(out)
@@ -85,6 +82,10 @@ module AspNet5Buildpack
 
     def install_dnx(out)
       dnx_installer.install(build_dir, out) unless File.exist? File.join(build_dir, 'approot', 'runtimes')
+    end
+    
+    def install_clidriver(out)
+      clidriver_installer.install(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
     end
 
     def restore_dependencies(out)
@@ -95,7 +96,7 @@ module AspNet5Buildpack
       copier.cp(File.join(build_dir, '.dnx'), cache_dir, out) if File.exist? File.join(build_dir, '.dnx')
       copier.cp(File.join(build_dir, 'libuv'), cache_dir, out) unless File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(build_dir, 'libunwind'), cache_dir, out) unless File.exist? File.join(cache_dir, 'libunwind')
-      #copier.cp(File.join(build_dir, 'odbc_cli'), cache_dir, out) unless File.exist? File.join(cache_dir, 'odbc_cli')
+      copier.cp(File.join(build_dir, 'odbc_cli'), cache_dir, out) unless File.exist? File.join(cache_dir, 'odbc_cli')
     end
 
     def step(description, method)
@@ -114,9 +115,9 @@ module AspNet5Buildpack
     attr_reader :cache_dir
     attr_reader :libuv_binary
     attr_reader :libunwind_binary
-    attr_reader :clidriver_installer
     attr_reader :dnvm_installer
     attr_reader :dnx_installer
+    attr_reader :clidriver_installer
     attr_reader :mozroots
     attr_reader :dnu
     attr_reader :copier
