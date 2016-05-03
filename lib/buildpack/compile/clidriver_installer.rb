@@ -31,7 +31,7 @@ module AspNet5Buildpack
      # cmd = 'echo $HOME; touch ~/.bashrc; pwd ; '
       @shell.exec(cmd, out)
       
-     cmd =  "curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o v10.5fp6_linuxx64_odbc_cli.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar.gz &> /dev/null"
+     cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null"
      @shell.exec(cmd, out)	  
      #cmd = "rm -rf #{app_dir}/clidriver; "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
@@ -42,14 +42,14 @@ module AspNet5Buildpack
       #cmd = 'cp -rf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
       # @shell.exec(cmd, out)
 	  
-      @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
-      @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
+      @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/clidriver/odbc_cli/clidriver/lib"
+      @shell.env['PATH'] = "$PATH:#{app_dir}/clidriver/odbc_cli/clidriver/bin"
 	  
       #cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; bash -c  db2cli validate -dsn alias1 -connect'
-      cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; ls -lRt #{app_dir}/odbc_cli/clidriver/bin; '
+      cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; ls -lRt #{app_dir}/clidriver/odbc_cli/clidriver/bin; '
       @shell.exec(cmd, out)
       
-      cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/odbc_cli/clidriver/cfg "
+      cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg "
       @shell.exec(cmd, out)
       #cmd = echo 
       #; db2cli validate -dsn alias1 -connect '
