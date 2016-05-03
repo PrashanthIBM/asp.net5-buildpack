@@ -27,12 +27,12 @@ module AspNet5Buildpack
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
       out.print("clidriver installation is going on")
-      cmd = "touch ~/.bashrc; rm -rf  #{app_dir}/clidriver"
+      cmd = "touch ~/.bashrc; rm -rf  #{app_dir}/clidriver; rm -rf odbc_cli_v10.5fp6_linuxx64.tar.gz "
      # cmd = 'echo $HOME; touch ~/.bashrc; pwd ; '
       @shell.exec(cmd, out)
       
-     #cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null"
-     cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" "
+     cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; ls -lrt #{app_dir}/ "
+     #cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null "
      @shell.exec(cmd, out)	  
      #cmd = "rm -rf #{app_dir}/clidriver; "
      #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
@@ -47,15 +47,15 @@ module AspNet5Buildpack
       @shell.env['PATH'] = "$PATH:#{app_dir}/clidriver/odbc_cli/clidriver/bin"
 	  
       #cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; bash -c  db2cli validate -dsn alias1 -connect'
-      cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; ls -lRt #{app_dir}/clidriver/odbc_cli/clidriver/bin; '
+      cmd = 'echo $LD_LIBRARY_PATH; echo $PATH;  '
       @shell.exec(cmd, out)
       
-      cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg "
-      @shell.exec(cmd, out)
+      #cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/clidriver/odbc_cli/clidriver/cfg "
+      #@shell.exec(cmd, out)
       #cmd = echo 
       #; db2cli validate -dsn alias1 -connect '
-      cmd = "db2cli validate -dsn alias1 -connect"
-      @shell.exec(cmd, out)      
+      #cmd = "db2cli validate -dsn alias1 -connect"
+      #@shell.exec(cmd, out)      
     end	
   end
 end
