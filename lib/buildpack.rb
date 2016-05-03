@@ -36,9 +36,9 @@ module AspNet5Buildpack
       cache_dir,
       LibuvInstaller.new(build_dir, shell),
       LibunwindInstaller.new(build_dir, shell),
-      ClidriverInstaller.new(build_dir, shell),
       DnvmInstaller.new(shell),
       DnxInstaller.new(shell),
+      ClidriverInstaller.new(build_dir, shell),
       DNU.new(shell),
       Copier.new,
       out)
