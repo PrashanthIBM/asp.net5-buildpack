@@ -26,20 +26,28 @@ module AspNet5Buildpack
       #@dest_dir = app_dir/clidriver
 	  
      # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
-      out.print("clidriver installation is going on")
+      out.print("clidriver installation is going on \n ")
       cmd = "touch ~/.bashrc; rm -rf  #{app_dir}/clidriver; rm -rf odbc_cli_v10.5fp6_linuxx64.tar.gz "
      # cmd = 'echo $HOME; touch ~/.bashrc; pwd ; '
       @shell.exec(cmd, out)
+      out.print("remove old clidriver folder \n ")
+      cmd = " rm -rf  #{app_dir}/clidriver "
+       @shell.exec(cmd, out)
+      
       
        out.print("present working directory display")
        cmd = "pwd; ls -lrt `pwd` "
+       
        @shell.exec(cmd, out)
       cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; ls #{app_dir}/.. "
      #cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null "
-     @shell.exec(cmd, out)	  
+     @shell.exec(cmd, out)
+     
+     cmd = " tar zxvf #{app_dir}/../odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/ "
+     @shell.exec(cmd, out)
      #cmd = "rm -rf #{app_dir}/clidriver; "
-     #cmd = 'ls -lrt $HOME; which tar; tar zxv --help ; tar zxv $HOME/v10.5fp6_linuxx64_odbc_cli.tar.gz '
-      #@shell.exec(cmd, out)
+     cmd = "ls #{app_dir}" 
+     @shell.exec(cmd, out)
       
       #cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar xvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar -C #{app_dir}/clidriver  "
       #@shell.exec(cmd, out)	  
