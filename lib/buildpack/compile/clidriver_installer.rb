@@ -34,7 +34,7 @@ module AspNet5Buildpack
        out.print("present working directory display")
        cmd = "pwd; ls -lrt `pwd` "
        @shell.exec(cmd, out)
-      cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; ls -lrt #{app_dir}/ "
+      cmd =  "mkdir -p #{app_dir}/clidriver; curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; ls #{app_dir}/.. "
      #cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null "
      @shell.exec(cmd, out)	  
      #cmd = "rm -rf #{app_dir}/clidriver; "
