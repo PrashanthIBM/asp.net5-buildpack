@@ -52,7 +52,7 @@ module AspNet5Buildpack
       #cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar xvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar -C #{app_dir}/clidriver  "
       #@shell.exec(cmd, out)	  
      
-      cmd = 'cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1'
+      cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
       @shell.exec(cmd, out)
 	  
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
