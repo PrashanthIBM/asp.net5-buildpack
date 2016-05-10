@@ -21,53 +21,45 @@ module AspNet5Buildpack
       @app_dir = app_dir
     end
 
-    def install(app_dir, out)
+    def extract(app_dir, out)
       @shell.env['HOME'] = app_dir
-      #@dest_dir = app_dir/clidriver
-	  
-     # cmd = 'touch ~/.bashrc; curl -LO ftp://9.26.93.131/devinst/db2_v105fp6/linuxamd64/s150623/v10.5fp6_linuxx64_odbc_cli.tar.gz; rm -rf  #{app_dir}/odbc_cli; '
+      
       out.print("clidriver installation is going on \n ")
-      cmd = "touch ~/.bashrc; rm -rf  #{app_dir}/clidriver; rm -rf odbc_cli_v10.5fp6_linuxx64.tar.gz "
-     # cmd = 'echo $HOME; touch ~/.bashrc; pwd ; '
+      cmd = "touch ~/.bashrc; rm -rf #{app_dir}/odbc_cli; "
       @shell.exec(cmd, out)
+      
       out.print("remove old clidriver folder \n ")
       cmd = "rm -rf  #{app_dir}/clidriver"
-       @shell.exec(cmd, out)
-      
-      
-       #out.print("present working directory display")
-       cmd = " rm -rf odbc_cli_v10.5fp6_linuxx64.tar.gz; rm -rf #{app_dir}/odbc_cli; "
-       
-       @shell.exec(cmd, out)
+      @shell.exec(cmd, out)
+    
       cmd =  "curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" "
-     #cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null "
-     @shell.exec(cmd, out)
+      #cmd = " curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" ; tar zxvf #{app_dir}/odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/clidriver &> /dev/null "
+      @shell.exec(cmd, out)
      
-     cmd = " tar zxvf #{app_dir}/../odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/ "
-     @shell.exec(cmd, out)
-     #cmd = "rm -rf #{app_dir}/clidriver; "
-     cmd = "ls #{app_dir}" 
-     @shell.exec(cmd, out)
+      cmd = " tar zxvf #{app_dir}/../odbc_cli_v10.5fp6_linuxx64.tar.gz -C #{app_dir}/ "
+      @shell.exec(cmd, out)
+     
+      cmd = "ls #{app_dir}" 
+      @shell.exec(cmd, out)
       
-      #cmd = "mkdir -p #{app_dir}/clidriver; chmod 777 #{app_dir}/clidriver; tar xvf #{app_dir}/v10.5fp6_linuxx64_odbc_cli.tar -C #{app_dir}/clidriver  "
-      #@shell.exec(cmd, out)	  
-     
       cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
       @shell.exec(cmd, out)
 	  
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
-	  
-      #cmd = 'echo $LD_LIBRARY_PATH; echo $PATH; bash -c  db2cli validate -dsn alias1 -connect'
+     
       cmd = 'echo $LD_LIBRARY_PATH; echo $PATH;  '
       @shell.exec(cmd, out)
       
       cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/odbc_cli/clidriver/cfg "
       @shell.exec(cmd, out)
-      #cmd = echo 
-      #; db2cli validate -dsn alias1 -connect '
+      
+       cmd = " rm -rf odbc_cli_v10.5fp6_linuxx64.tar.gz"
+       @shell.exec(cmd, out)
+     
       cmd = "db2cli validate -dsn alias1 -connect"
       @shell.exec(cmd, out)      
+      
     end	
   end
 end
