@@ -84,7 +84,7 @@ module AspNet5Buildpack
       dnx_installer.install(build_dir, out) unless File.exist? File.join(build_dir, 'approot', 'runtimes')
     end
     
-    def install_clidriver(out)
+    def extract_clidriver(out)
       clidriver_installer.extract(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
       #clidriver_installer.install(build_dir, out)
     end
