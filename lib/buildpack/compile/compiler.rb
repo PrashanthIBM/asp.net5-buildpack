@@ -73,7 +73,7 @@ module AspNet5Buildpack
       copier.cp(File.join(cache_dir, '.dnx'), build_dir, out) if File.exist? File.join(cache_dir, '.dnx')
       copier.cp(File.join(cache_dir, 'libuv'), build_dir, out) if File.exist? File.join(cache_dir, 'libuv')
       copier.cp(File.join(cache_dir, 'libunwind'), build_dir, out) if File.exist? File.join(cache_dir, 'libunwind')
-      copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
+      #copier.cp(File.join(cache_dir, 'odbc_cli'), build_dir, out) if File.exist? File.join(cache_dir, 'odbc_cli')
     end
     
     def install_dnvm(out)
