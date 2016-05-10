@@ -48,7 +48,7 @@ module AspNet5Buildpack
       step('Extracting libunwind', method(:extract_libunwind))
       step('Installing DNVM', method(:install_dnvm))
       step('Installing DNX with DNVM', method(:install_dnx))
-      step('Installing clidriver', method(:install_clidriver))
+      step('Installing clidriver', method(:extract_clidriver))
       puts "CLIDRIVER installation is done and db2cli validate is working \n"
       step('Restoring dependencies with DNU', method(:restore_dependencies))
       step('Saving to buildpack cache', method(:save_cache))
@@ -85,7 +85,7 @@ module AspNet5Buildpack
     end
     
     def install_clidriver(out)
-      clidriver_installer.install(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
+      clidriver_installer.extract(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
       #clidriver_installer.install(build_dir, out)
     end
 
