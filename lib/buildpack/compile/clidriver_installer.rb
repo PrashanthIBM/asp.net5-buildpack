@@ -47,7 +47,7 @@ module AspNet5Buildpack
 	  
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
-      @shell.env['DB2NMPTRACE'] = 1
+      #@shell.env['DB2NMPTRACE'] = 1
       #@shell.env['DB2NMPCONSOLE'] = "#{app_dir}/db2log.txt" 
      
       cmd = 'echo $LD_LIBRARY_PATH; echo $PATH;  '
