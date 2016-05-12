@@ -25,11 +25,11 @@ module AspNet5Buildpack
       @shell.env['HOME'] = app_dir
       
       out.print("clidriver installation is going on \n ")
-      cmd = "touch ~/.bashrc; rm -rf #{app_dir}/odbc_cli; "
+      cmd = "touch ~/.bashrc;"
       @shell.exec(cmd, out)
       
       out.print("remove old clidriver folder \n ")
-      cmd = "rm -rf  #{app_dir}/clidriver"
+      cmd = "rm -Rvf  #{app_dir}/clidriver; rm -Rvf #{app_dir}/odbc_cli;"
       @shell.exec(cmd, out)
     
       cmd =  "curl -X GET -H \"Authorization: Basic b25lY29ubmVjdDpibHVlY29ubmVjdA==\" -o odbc_cli_v10.5fp6_linuxx64.tar.gz \"http://oneconnect.mybluemix.net/ds/drivers/download/odbccli64/linuxamd64/v10.5fp6?Accept-License=yes\" "
@@ -40,6 +40,9 @@ module AspNet5Buildpack
       @shell.exec(cmd, out)
      
       cmd = "ls #{app_dir}; ls #{app_dir}/odbc_cli" 
+      @shell.exec(cmd, out)
+      
+      cmd = "ls -lrt #{app_dir}/odbc_cli/clidriver/lib/"
       @shell.exec(cmd, out)
       
       cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
