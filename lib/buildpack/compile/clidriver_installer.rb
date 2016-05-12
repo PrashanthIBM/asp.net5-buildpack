@@ -45,12 +45,15 @@ module AspNet5Buildpack
       cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
       @shell.exec(cmd, out)
 	  
-      @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
+      @shell.env['LD_LIBRARY_PATH'] = "#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
       @shell.env['DB2NMPTRACE'] = 1
       @shell.env['DB2NMPCONSOLE'] = "#{app_dir}/db2log.txt" 
      
       cmd = "echo 'LD_LIBRARY_PATH' ;echo $LD_LIBRARY_PATH; echo $PATH; "
+      @shell.exec(cmd, out)
+      
+      cmd = "ls -lrt #{app_dir}/odbc_cli/clidriver/lib" 
       @shell.exec(cmd, out)
       
       cmd = "/bin/cp -Rvf #{app_dir}/db2dsdriver.cfg #{app_dir}/odbc_cli/clidriver/cfg "
