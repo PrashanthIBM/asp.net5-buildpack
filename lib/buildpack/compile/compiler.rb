@@ -85,8 +85,8 @@ module AspNet5Buildpack
     end
     
     def extract_clidriver(out)
-      clidriver_installer.extract(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
-      #clidriver_installer.extract(build_dir, out)
+      #clidriver_installer.extract(build_dir, out) unless File.exist? File.join(build_dir, 'odbc_cli') 
+      clidriver_installer.extract(build_dir, out)
     end
 
     def restore_dependencies(out)
