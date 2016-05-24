@@ -66,7 +66,12 @@ module AspNet5Buildpack
        @shell.exec(cmd, out)
      
       cmd = "db2cli validate -dsn alias1 -connect"
-      @shell.exec(cmd, out)      
+      @shell.exec(cmd, out)    
+      
+      out.print("copying ibm data core driver  \n ")
+      cmd = /bin/cp -Rvf #{app_dir}/IBM.Data.DB2.Core.dll #{app_dir}/.dnx/packages/IBM.Data.DB2.Core/10.5.5.100/lib/dnxcore50/IBM.Data.DB2.Core.dll"
+      @shell.exec(cmd, out) 
+      out.print("finished copying the driver \n ")
       
     end	
   end
