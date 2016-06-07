@@ -45,8 +45,8 @@ module AspNet5Buildpack
       cmd = "ls -lrt #{app_dir}/odbc_cli/clidriver/lib/"
       @shell.exec(cmd, out)
       
-      cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
-      @shell.exec(cmd, out)
+      #cmd = "cp -Rvf #{app_dir}/libdb2.so.1 #{app_dir}/odbc_cli/clidriver/lib/libdb2.so.1"
+      #@shell.exec(cmd, out)
 	  
       @shell.env['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:#{app_dir}/odbc_cli/clidriver/lib"
       @shell.env['PATH'] = "$PATH:#{app_dir}/odbc_cli/clidriver/bin"
